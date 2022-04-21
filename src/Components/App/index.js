@@ -6,12 +6,16 @@ import { Physics, useBox, usePlane } from "@react-three/cannon";
 
 import css from "./App.module.css";
 
-function PhyPlane({ color, ...props }) {
+function PhyPlane({ color, opacity, ...props }) {
   const [ref] = usePlane(() => ({ ...props }));
 
   return (
     <Plane args={[1000, 1000]} ref={ref}>
-      <meshStandardMaterial color={color} />
+      <meshPhongMaterial
+        color={color}
+        opacity={opacity ? opacity : 1}
+        transparent
+      />
     </Plane>
   );
 }
@@ -32,7 +36,7 @@ function PhyBox(props) {
         console.log(event.camera.position, event.camera.quaternion);
       }}
     >
-      <meshPhongMaterial />
+      <meshNormalMaterial />
     </Box>
   );
 }
@@ -41,9 +45,10 @@ function App() {
   const orbCam = useRef();
   return (
     <Canvas camera={{ position: [0, -2, -10] }}>
-      <Physics gravity={[0, -5, 0]}>
+      <Physics gravity={[0, -5, 0]} allowSleep={true}>
         <PhyPlane
           color="hotpink"
+          opacity={0.0000001}
           position={[0, -0.9, 0]}
           rotation={[-Math.PI / 2, 0, 0]}
         />

@@ -1,16 +1,16 @@
-import React, { useEffect, useRef } from "react";
-import * as THREE from "three";
+import React, { useRef } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Box, Plane, OrbitControls } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { Physics, useBox, usePlane } from "@react-three/cannon";
 
 import css from "./App.module.css";
+import { colors } from "./colors.js";
 
 function PhyPlane({ color, opacity, ...props }) {
   const [ref] = usePlane(() => ({ ...props }));
 
   return (
-    <mesh ref={ref}>
+    <mesh ref={ref} receiveShadow>
       <planeBufferGeometry args={[1000, 1000]}></planeBufferGeometry>
       <meshPhongMaterial
         color={color}
@@ -25,69 +25,6 @@ function PhyBox(props) {
   const [ref, api] = useBox(() => ({ args: [1, 1, 1], mass: 1, ...props }));
 
   function getRandomColor() {
-    const colors = [
-      "#149474",
-      "#85defb",
-      "#8098d2",
-      "#b46cc4",
-      "#e394e3",
-      "#3ccc8c",
-      "#2c88c3",
-      "#44b4ea",
-      "#545cbc",
-      "#6c7c94",
-      "#6474e4",
-      "#8c6cd4",
-      "#74e4a4",
-      "#efeec6",
-      "#fce7a3",
-      "#c43c4c",
-      "#b3b4da",
-      "#fbb077",
-      "#c9deee",
-      "#7454b4",
-      "#fac3ec",
-      "#54647c",
-      "#24b47c",
-      "#acf4b4",
-      "#bbfbfa",
-      "#fcec84",
-      "#84bbfc",
-      "#9454ac",
-      "#a48ceb",
-      "#fccca4",
-      "#f4ab5c",
-      "#e49c4c",
-      "#e45c54",
-      "#cc6b40",
-      "#fb745c",
-      "#fcd46c",
-      "#e4f1f9",
-      "#e47c4c",
-      "#dc9444",
-      "#1c84a4",
-      "#58d49c",
-      "#fcf4f4",
-      "#fce4f4",
-      "#ec7c74",
-      "#94f4ee",
-      "#fcfce4",
-      "#1c9c74",
-      "#a4acbc",
-      "#f4fcfc",
-      "#646cdc",
-      "#fcfcec",
-      "#dc544c",
-      "#ecfcfc",
-      "#f4fcec",
-      "#fc9474",
-      "#fcdcf4",
-      "#64ccdc",
-      "#dcfcd4",
-      "#f4f4fc",
-      "#dce4fc",
-      "#3c9858",
-    ];
     const color = colors[Math.floor(Math.random() * colors.length)];
 
     return color;
@@ -97,6 +34,8 @@ function PhyBox(props) {
     <mesh
       args={[1, 1, 1]}
       ref={ref}
+      castShadow
+      receiveShadow
       onClick={(event) => {
         //get normal, reverse direction
         const normal = event.face.normal.negate().multiplyScalar(30).toArray();
@@ -105,7 +44,7 @@ function PhyBox(props) {
       }}
     >
       <boxBufferGeometry></boxBufferGeometry>
-      <meshPhongMaterial color={getRandomColor()} />
+      <meshLambertMaterial color={getRandomColor()} />
     </mesh>
   );
 }
@@ -151,7 +90,7 @@ function App() {
 
       <OrbitControls
         ref={orbCam}
-        target={[4.5, 3, 0]}
+        target={[3.5, 3, 0]}
         enableZoom={false}
         enablePan={false}
         minAzimuthAngle={-Math.PI / 4} //left

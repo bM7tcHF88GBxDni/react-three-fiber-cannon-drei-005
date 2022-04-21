@@ -54,8 +54,8 @@ function App() {
         enablePan={false}
         minAzimuthAngle={-Math.PI / 4} //left
         maxAzimuthAngle={Math.PI / 4} //right
-        minPolarAngle={Math.PI / 4}
-        maxPolarAngle={Math.PI / 1} //to bottom pole
+        minPolarAngle={Math.PI / 4} //upper limit
+        maxPolarAngle={Math.PI / 1.25} //lower limit
       />
     </Canvas>
   );

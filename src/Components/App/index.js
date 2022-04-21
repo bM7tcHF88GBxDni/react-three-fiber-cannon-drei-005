@@ -3,51 +3,10 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { Physics, useBox, usePlane } from "@react-three/cannon";
 
+import PhyPlane from "../PhyPlane";
+import PhyBox from "../PhyBox";
 import css from "./App.module.css";
-import { colors } from "./colors.js";
-
-function PhyPlane({ color, opacity, ...props }) {
-  const [ref] = usePlane(() => ({ ...props }));
-
-  return (
-    <mesh ref={ref} receiveShadow>
-      <planeBufferGeometry args={[1000, 1000]}></planeBufferGeometry>
-      <meshPhongMaterial
-        color={color}
-        opacity={opacity ? opacity : 1}
-        transparent
-      />
-    </mesh>
-  );
-}
-
-function PhyBox(props) {
-  const [ref, api] = useBox(() => ({ args: [1, 1, 1], mass: 1, ...props }));
-
-  function getRandomColor() {
-    const color = colors[Math.floor(Math.random() * colors.length)];
-
-    return color;
-  }
-
-  return (
-    <mesh
-      args={[1, 1, 1]}
-      ref={ref}
-      castShadow
-      receiveShadow
-      onClick={(event) => {
-        //get normal, reverse direction
-        const normal = event.face.normal.negate().multiplyScalar(30).toArray();
-
-        api.applyLocalImpulse(normal, [0, 0, 0]); //apply directional force to center
-      }}
-    >
-      <boxBufferGeometry></boxBufferGeometry>
-      <meshLambertMaterial color={getRandomColor()} />
-    </mesh>
-  );
-}
+import { colors } from "../PhyBox/colors.js";
 
 function App() {
   const orbCam = useRef();

@@ -15,7 +15,7 @@ I use a cube to develop and test my implementations. I ideated and planned a few
 I went straight into the deep end with the first implementation as I felt it would be the most impressive, though also the most complex:
 
 v1
-- By default, Cannon applies impulse force to an object at the center of its volume. I wanted to apply force precisely where the user clicks on the object.
+- By default, Cannon applies impulse force to an object at the center of its volume. Force is applied precisely where the user clicks on the object.
 - When the user clicks a cube face, apply impulse force away in the direction of the face (push).
 
 v2
@@ -27,29 +27,39 @@ Demo and Code:
 https://codesandbox.io/s/force-on-click-position-solution-1-yut4lt
 
 Code is fully commented. Issues with this implementation are:
-1) Once the cube is pushed over onto another face- forces applied break in a way I don't fully understand. Some sort of issue with how the force is applied to the objects local co-ordinates after rotation changes.
-2) const deltaPosition = worldPoint.sub(center);
-This works well for only vertical faces. Clicking on a horizontal face will produce wrong results?
-3) const deltaPosition = center.sub(worldPoint);
-This works well for only horizontal faces. Clicking on a vertical face will produce wrong results?
-4) Force is more powerful when applied closer to the center of gravity, instead of further away from it
+1) Once the cube is pushed over onto another face, the objects local XYZ axes rotate and change. 
+The relative position of the click is still calcualted correctly but the direction of the force
+applied is wrong- as if the object's local XYZ axes have not changed. This must be related to
+how the cube face's normal is used as a direction (and force).
+2) Force is more powerful when applied closer to the center of gravity, instead of further away from it
 e.g. imagine a skyscraper, it will fall over easily when pushed at the base instead of the top/roof. Try it on a face.
 
 ### Solution 2
-This is necessary as the first implementation above is quite difficult to debug. React Three Fiber does not have optimal debugging tools. This implementation has its benefits: 
+This is necessary as the first implementation above is quite difficult to debug with the tools available, and I am happy with the flawed end result which otherwise would require a great deal of additional effort to diagnose and fix. 
+
+A second solution has plenty of benefits:
 - Simpler method, easy to understand/maintain and implement
-- Still high impact
-- Remains versatile, if not more
+- Still high impact, users probably wouldn't notice the difference, especially if the 3D asset has sufficient normals/faces
+- Remains versatile, can be used for many shapes, if not more
 
+v1 
+- Apply impulse on center of object in reverse normal directions (pushing object)
 
-v1 Apply impulse on center of cube in reverse normal directions
+Additional:
+- Can be used to pull object by using just normal directions
 
-v2 Pushing and Pulling version
+[GIF]
+</br>
+Demo and Code:
+https://codesandbox.io/s/force-on-center-of-volume-c91r7d
+
 
 # General Challenges
-- Lack of good documentation
-- Lack of debugging
+- Lot of onboarding to do: underlying ThreeJS, CannonJS
+- Lack of comprehensive documentation, lack of resources
+- No visual GUI slowed development/experimentation
 - Split community
+- Lack of debugging tools
 
 ### Tech Stack
 React Three Fiber (React wrapper for underlying ThreeJS)

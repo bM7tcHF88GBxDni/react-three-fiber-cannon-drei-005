@@ -48,7 +48,7 @@ v1
 Additional:
 - Can be used to pull object by using just normal directions
 
-[GIF]
+![](https://github.com/bM7tcHF88GBxDni/README-GIF-Storage/blob/main/react-three-fiber-gifs/Force%20on%20Center%20Volume%20Solution%202.gif)
 </br>
 Demo and Code:
 https://codesandbox.io/s/force-on-center-of-volume-c91r7d
@@ -62,7 +62,7 @@ https://codesandbox.io/s/force-on-center-of-volume-c91r7d
 - Lack of debugging tools
 
 ### Tech Stack
-React Three Fiber (React wrapper for underlying ThreeJS)
-React Three Drei for extra features
-React Three Cannon for physics (adding force to the object a user clicks, React wrapper for underlying CannonES)
+- React Three Fiber (React wrapper for underlying ThreeJS)
+- React Three Drei for extra features
+- React Three Cannon for physics (adding force to the object a user clicks, React wrapper for underlying CannonES)
 

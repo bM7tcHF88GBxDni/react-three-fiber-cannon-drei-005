@@ -21,7 +21,7 @@ v1
 v2
 - When the user clicks on a face facing up, apply negative impulse (pull) instead of pushing into the ground to meagre effect. 
 
-[GIF]
+![](https://github.com/bM7tcHF88GBxDni/README-GIF-Storage/blob/93fe365158df6711fd33e5fdc264c8c95a9c3589/react-three-fiber-gifs/Force%20on%20Click%20Position%20Solution%201.gif)
 </br>
 Demo and Code:
 https://codesandbox.io/s/force-on-click-position-solution-1-yut4lt
